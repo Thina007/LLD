@@ -1,0 +1,166 @@
+Add Movie
+Add Theatre
+Add Screen
+Schedule a Show
+View Shows
+View Available Seats
+Book Seats
+Cancel Booking
+Make Payment
+Print Ticket
+
+
+Clarifying question:
+1. Does cancelled ticket get refund or have anny cancel charges.
+2. How many ticket per person can able to book.
+3. Is there any option of change the timing of the ticket.
+4. What will happen . if payment get failed. need to stored in refund list and return back the payment according to the payment status
+5. Wheather need to send the confirmation for Booking
+6. What if the same seat booked by two person concurreny happen. it must be synch call.
+7. Is it able to cancel the move show. booked person get refund. ? or change the timing of the show no refund.where need to nofiy the Cx 
+8. does two movie add to same screen same timing ?
+
+
+
+
+Entity :
+
+1. Movie
+2. Theatre
+3. Screen
+4. Show
+5. Seat
+6. Booking
+7. Payment
+
+Data Structure:
+
+1. Movie 
+Fileds :
+
+1. movie Id
+2. movie name
+3. Timing
+4. release date
+
+Map<movieId,Movie>
+
+2. Screen :
+Fiels :
+
+1.Screen id 
+2.Theater id 
+3.Map<Timing,Show>
+
+
+3. Show :
+Fields:
+
+1. timing from
+2. timing to
+3. movie id
+4. theater id 
+5. Seat[] seats = new Seat[capacity];
+
+4.Theatre:
+Fiels:
+
+1.Theatre id
+2.Map<Screen,Capacity>
+
+5.Seat
+Fields:
+
+1.Seat number
+2.Status (booked/Avaialble)
+3.seatType -> Map<Type,Price> (Goald/Silver/Diament)
+
+Map<SeatNumber,Seat>
+
+
+6.MoviePaymentService
+
+bookTicket(Theatre,Screen,Show,List<Seat>(list of seat selected)) -> Check the seat avaialblity by status if. true redirect to paymentService
+    Payment getPayMent(seatPrice * no of seat)
+    if(payment.staus == true){
+        PrintTicket(Theatr,Screen,List<Seat>);
+    }
+
+cancelTicket(Theatre,Screen,Show,Seat)
+
+
+7.PaymentService
+
+1. Payment id
+2. Payment status
+3. Payment type (Googlepay,Phonepay,Paytm)
+4. Price
+5. Reason
+
+FailedPayMent
+List<Payment>
+
+
+
+Methods:
+
+1.Class : Movie :
+
+BookingService
+
+
+Map<ThreaterId,Theater> bookingService
+
+addTheater(Theater);
+removeTheater(Theater);
+
+
+2.TheaterService:
+
+Map<ScreenId,Screen> 
+
+addScreen(Theater,Screen);
+removeScreen(Theater,Scrren);
+
+
+
+3.ScreenService:
+
+Map<Timing,Show>
+
+addShow(Theater,Scrren,Show);
+remove(Theater,Scrren,Show);
+getAvailablitySeat(Theater,Scrren,Show);
+getBookedSeat(Theater,Scrren,Show);
+
+
+
+4.MovieBookPaymentSerive:
+
+
+getSeatAvailablity(Theater,Scrren,Show,List<Seat>);
+
+BookMovie :
+1.ThreaterId
+2.ScreenId
+3.Show Timing
+4.Movie Id
+5.Seats
+6.Cost
+7.BookingId
+8.BookingStatus
+9.PaymentId
+
+    if yes -> getPayMent(BookMovie);
+
+cancelBooking(BookMovie)    
+
+
+    
+PaymentSerive;
+
+getPayMent(BookMovie)
+
+
+
+
